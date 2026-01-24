@@ -6,7 +6,7 @@
 /*   By: clementngoie <clementngoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 17:09:24 by clementngoi       #+#    #+#             */
-/*   Updated: 2026/01/22 17:27:53 by clementngoi      ###   ########.fr       */
+/*   Updated: 2026/01/24 14:53:29 by clementngoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ t_philo *init_philo(t_data *data)
     int i;
     t_philo *philo;
     
-    data->nb_philo = malloc(sizeof(t_philo) * data->nb_philo);
-    if (!data->nb_philo)
-        return (EXIT_FAILURE);
+    philo = malloc(sizeof(t_philo) * data->nb_philo);
+    if (!philo)
+        return (NULL);
     i = 0;
     while (i < data->nb_philo)
     {

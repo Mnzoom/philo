@@ -4,6 +4,7 @@
 #include <pthread.h>
 #include <sys/time.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <stdio.h>
 
 typedef struct s_data
@@ -31,8 +32,10 @@ typedef struct s_philo
 }	t_philo;
 
 int	ft_atoi(const char	*str);
+int	ft_isspace(int c);
 long timestamp(void);
 int init_fork(t_data *data);
 t_philo	*init_philo(t_data *data);
+void	*routine(void *ac);
 
 #endif 

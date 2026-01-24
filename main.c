@@ -6,7 +6,7 @@
 /*   By: clementngoie <clementngoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 16:35:47 by clementngoi       #+#    #+#             */
-/*   Updated: 2026/01/24 14:03:35 by clementngoi      ###   ########.fr       */
+/*   Updated: 2026/01/24 14:47:28 by clementngoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	init_data(int ac, char	**av, t_data *data)
 	data->time_to_eat = ft_atoi(av[3]);
 	data->time_to_sleep = ft_atoi(av[4]);
 	if (ac == 6)
-		data->nb_meals = ft_atoi(5);
+		data->nb_meals = ft_atoi(av[5]);
 	else 
 		data->nb_meals = -1;
 	if (data->nb_philo <= 0 || data->time_to_die <= 0 || data->time_to_eat  <= 0 || data->time_to_sleep <= 0)
@@ -57,6 +57,20 @@ int main(int ac, char **av)
 	{
 		printf("Error: Malloc philo failed\n");
 		return (EXIT_FAILURE);
+	}
+	int i;
+
+	i = 0;
+	while (i < data.nb_philo)
+	{
+		pthread_create(&philo[i].thread, NULL, routine, &philo[i]);
+		i++;
+	}
+	i = 0;
+	while (i < data.nb_philo)
+	{
+		pthread_join(philo[i].thread, NULL);
+		i++;
 	}
 	return (0);
 }

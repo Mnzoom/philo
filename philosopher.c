@@ -6,11 +6,21 @@
 /*   By: clementngoie <clementngoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 14:04:28 by clementngoi       #+#    #+#             */
-/*   Updated: 2026/01/24 14:17:57 by clementngoi      ###   ########.fr       */
+/*   Updated: 2026/01/24 14:36:31 by clementngoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void    routine(void *ac)
+#include "philosopher.h"
+
+void    *routine(void *ac)
 {
+    t_philo *philo;
+    philo = (t_philo *)ac;
+    while (1)
+    {
+        printf("The cake %d is Alive\n", philo->id);
+        usleep(500000);
+    }
+    return (NULL);
     
 }

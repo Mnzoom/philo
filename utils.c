@@ -6,20 +6,43 @@
 /*   By: clementngoie <clementngoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 16:41:45 by clementngoi       #+#    #+#             */
-/*   Updated: 2026/01/22 16:41:57 by clementngoi      ###   ########.fr       */
+/*   Updated: 2026/01/24 14:40:53 by clementngoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-int ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
-    int res = 0;
-    int i = 0;
-    while (str[i] >= '0' && str[i] <= '9')
-    {
-        res = res * 10 + (str[i] - '0');
-        i++;
-    }
-    return res;
+	int	result;
+	int	sign;
+	int	i;
+
+	result = 0;
+	sign = 1;
+	i = 0;
+	while (ft_isspace(str[i]))
+		i++;
+	if (str[i] == '+' && str[i + 1] != '-')
+		i++;
+	if (str[i] == '-')
+	{
+		sign = -1;
+		i++;
+	}
+	while (str[i] && str[i] >= 48 && str[i] <= 57)
+	{
+		result *= 10;
+		result += str[i] - 48;
+		i++;
+	}
+	result *= sign;
+	return (result);
+}
+
+int	ft_isspace(int c)
+{
+	if (c == 9 || c == 10 || c == 11 || c == 12 || c == 13 || c == 32)
+		return (1);
+	return (0);
 }
