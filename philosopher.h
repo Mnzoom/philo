@@ -37,5 +37,10 @@ long timestamp(void);
 int init_fork(t_data *data);
 t_philo	*init_philo(t_data *data);
 void	*routine(void *ac);
+void	think(t_philo *philo);
+void	take_forks(t_philo	*philo);
+void	eat(t_philo *philo);
+void	put_forks(t_philo *philo);
+void	sleep_philo(t_philo *philo);
 
 #endif 
