@@ -6,7 +6,7 @@
 /*   By: clementngoie <clementngoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 17:09:24 by clementngoi       #+#    #+#             */
-/*   Updated: 2026/01/24 14:53:29 by clementngoi      ###   ########.fr       */
+/*   Updated: 2026/01/25 13:48:28 by clementngoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ t_philo *init_philo(t_data *data)
         philo[i].id = i + 1;
         philo[i].meals_eaten = 0;
         philo[i].last_meal = timestamp();
+        pthread_mutex_init(&philo[i].meal_mutex, NULL);
         philo[i].left_fork = &data->fork[i];
         philo[i].right_fork = &data->fork[(i + 1) % data->nb_philo];
         philo[i].data = data;

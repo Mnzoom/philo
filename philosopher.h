@@ -17,6 +17,8 @@ typedef struct s_data
 	long	start_time;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	print_mutex;
+	int	dead;
+	pthread_mutex_t	dead_mutex;
 	
 }	t_data;
 
@@ -26,6 +28,7 @@ typedef struct s_philo
 	int	meals_eaten;
 	long	last_meal;
 	pthread_t	thread;
+	pthread_mutex_t	meal_mutex;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	t_data	*data;
@@ -42,5 +45,9 @@ void	take_forks(t_philo	*philo);
 void	eat(t_philo *philo);
 void	put_forks(t_philo *philo);
 void	sleep_philo(t_philo *philo);
+void	ft_usleep(long time, t_data *data);
+int		is_dead(t_data *data);
+void	set_death(t_data *data);
+void	*monitor(void *ac);
 
 #endif 
