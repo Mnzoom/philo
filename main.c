@@ -6,7 +6,7 @@
 /*   By: clementngoie <clementngoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 16:35:47 by clementngoi       #+#    #+#             */
-/*   Updated: 2026/01/25 14:10:04 by clementngoi      ###   ########.fr       */
+/*   Updated: 2026/01/26 12:42:09 by clementngoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,13 @@ static int	init_data(int ac, char	**av, t_data *data)
 		data->nb_meals = ft_atoi(av[5]);
 	else 
 		data->nb_meals = -1;
+		printf("DEBUG: nb_philo=%d, time_to_die=%ld, time_to_eat=%ld, time_to_sleep=%ld, nb_meals=%d\n",
+    data->nb_philo, data->time_to_die, data->time_to_eat, data->time_to_sleep, data->nb_meals);
+
 	if (data->nb_philo <= 0 || data->time_to_die <= 0 || data->time_to_eat  <= 0 || data->time_to_sleep <= 0)
 		return (EXIT_FAILURE);
 	data->start_time = timestamp();
+	data->dead = 0;
 	pthread_mutex_init(&data->print_mutex, NULL);
 	pthread_mutex_init(&data->dead_mutex, NULL);
 	return (EXIT_SUCCESS);
@@ -38,7 +42,7 @@ static int	start_thread(t_philo *philo, t_data *data)
 	i = 0;
 	while (i < data->nb_philo)
 	{
-		philo[i].last_meal = timestamp();
+		philo[i].last_meal = timestamp() - philo->data->start_time;
 		if (pthread_create(&philo[i].thread, NULL, routine, &philo[i]))
 			return (EXIT_FAILURE);
 		i++;
@@ -71,7 +75,7 @@ int main(int ac, char **av)
 	
 	if (ac != 5 && ac != 6)
 	{
-		write (2, "ERROR\n Wrong number of arguments\n", 32);
+		write (2, "ERROR\nWrong number of arguments\n", 32);
 		return (EXIT_FAILURE);
 	}
 	if (init_data(ac, av, &data))

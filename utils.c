@@ -6,7 +6,7 @@
 /*   By: clementngoie <clementngoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 16:41:45 by clementngoi       #+#    #+#             */
-/*   Updated: 2026/01/25 13:55:54 by clementngoi      ###   ########.fr       */
+/*   Updated: 2026/01/26 12:35:26 by clementngoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,20 +88,22 @@ void	*monitor(void *ac)
 	t_philo	*philo;
 	int		i;
 	long	last_meal;
-	
+
 	philo = (t_philo *)ac;
-	pthread_mutex_lock(&philo[i].meal_mutex);
-	last_meal = philo[i].last_meal;
-	pthread_mutex_unlock(&philo[i].meal_mutex);
-	while(is_dead(philo[0].data))
+	while(!is_dead(philo[0].data))
 	{
 		i = 0;
 		while (i < philo[0].data->nb_philo)
 		{
+			pthread_mutex_lock(&philo[i].meal_mutex);
+			last_meal = philo[i].last_meal;
+			pthread_mutex_unlock(&philo[i].meal_mutex);
 			if (timestamp() - last_meal > philo[i].data->time_to_die)
 			{
 				pthread_mutex_lock(&philo[i].data->print_mutex);
-				printf("%ld %d died\n", timestamp(), philo[i].id);
+				printf("%ld %d died\n",
+					 timestamp() - philo[i].data->start_time
+				, philo[i].id);
 				pthread_mutex_unlock(&philo[i].data->print_mutex);
 				set_death(philo[i].data);
 				return (NULL);
