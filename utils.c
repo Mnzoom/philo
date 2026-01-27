@@ -6,7 +6,7 @@
 /*   By: clementngoie <clementngoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 16:41:45 by clementngoi       #+#    #+#             */
-/*   Updated: 2026/01/26 12:35:26 by clementngoi      ###   ########.fr       */
+/*   Updated: 2026/01/27 17:24:56 by clementngoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	*monitor(void *ac)
 {
 	t_philo	*philo;
 	int		i;
+	long	now;
 	long	last_meal;
 
 	philo = (t_philo *)ac;
@@ -98,19 +99,24 @@ void	*monitor(void *ac)
 			pthread_mutex_lock(&philo[i].meal_mutex);
 			last_meal = philo[i].last_meal;
 			pthread_mutex_unlock(&philo[i].meal_mutex);
-			if (timestamp() - last_meal > philo[i].data->time_to_die)
+
+			now = timestamp();
+			if (now - last_meal >= philo[i].data->time_to_die)
 			{
 				pthread_mutex_lock(&philo[i].data->print_mutex);
-				printf("%ld %d died\n",
-					 timestamp() - philo[i].data->start_time
-				, philo[i].id);
-				pthread_mutex_unlock(&philo[i].data->print_mutex);
-				set_death(philo[i].data);
-				return (NULL);
+				if (!is_dead(philo[i].data))
+				{
+					printf("%ld %d died\n",
+					now - philo[i].data->start_time,
+					 philo[i].id);
+				}
+			pthread_mutex_unlock(&philo[i].data->print_mutex);
+			set_death(philo[i].data);
+			return (NULL);
 			}
 			i++;
 		}
-		usleep(1000);
+		usleep(500);
 	}
 	return (NULL);  
 }
